@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Planejamento | Painel do Lojista</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos específicos para status */
+        .status {
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .status.andamento {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status.concluido {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.pendente {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        /* Responsividade extra para tabelas */
+        @media (max-width: 600px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+            table, thead, tbody, th, td, tr {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>    
+        <h1>Painel do Lojista</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="Clientes.html">Clientes</a></li>
+                <li><a href="Pedidos.html">Pedidos</a></li>
+                <li><a href="Controle de Estoque.html">Estoque</a></li>
+                <li><a href="Cadastro de Produtos.html">Produtos</a></li>
+                <li><a href="Relatórios de Vendas.html">Relatórios</a></li>
+                <li><a href="INVESTIMENTOS.html">Investimentos</a></li>
+                <li><a href="PLANEJAMENTO.html" class="active">Planejamento</a></li>
+                <li><a href="Cupons de Desconto.html">Cupons</a></li>
+                <li><a href="Configurações da Loja.html">Configurações</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Planejamentos</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Período</th>
+                        <th>Valor Previsto</th>
+                        <th>Status</th>
+                        <th>Observações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Mensal</strong> (Junho)</td>
+                        <td>R$ 5.000,00</td>
+                        <td data-label="Status"><span class="status andamento">Em andamento</span></td>
+                        <td>Meta mensal de vendas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Semanal</strong> (1ª semana de Junho)</td>
+                        <td>R$ 1.250,00</td>
+                        <td data-label="Status"><span class="status concluido">Concluído</span></td>
+                        <td>Meta semanal atingida</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Diário</strong> (01/06/2025)</td>
+                        <td>R$ 250,00</td>
+                        <td data-label="Status"><span class="status pendente">Pendente</span></td>
+                        <td>Meta do dia</td>
+                    </tr>
+                    <!-- Adicione mais linhas conforme necessário -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Painel do Lojista</p>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

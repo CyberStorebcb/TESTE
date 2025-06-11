@@ -1,0 +1,200 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #2d3e50;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0 0 10px 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+nav ul li a.active,
+nav ul li a:active {
+    background: #1abc9c;
+    color: #fff;
+}
+
+nav ul li a:hover {
+    background: #1abc9c;
+}
+
+main {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+h2 {
+    margin-top: 0;
+    color: #2d3e50;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    min-width: 600px;
+}
+
+th, td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 8px;
+    text-align: left;
+}
+
+th {
+    background: #f4f6f8;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+tr:nth-child(even) {
+    background: #fafbfc;
+}
+
+tbody tr:hover {
+    background: #e8f6f3;
+    transition: background 0.2s;
+}
+
+.status {
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-block;
+}
+.status.andamento {
+    background: #fff3cd;
+    color: #856404;
+}
+.status.concluido {
+    background: #d4edda;
+    color: #155724;
+}
+.status.pendente {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background: #2d3e50;
+    color: #fff;
+    margin-top: 40px;
+}
+
+.input-busca {
+    margin-bottom: 15px;
+    padding: 8px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: border 0.2s;
+}
+.input-busca:focus {
+    border: 1.5px solid #1abc9c;
+    outline: none;
+}
+a[title="Editar"], a[title="Excluir"] {
+    font-size: 18px;
+    margin-right: 8px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+a[title="Editar"]:hover {
+    color: #1abc9c;
+}
+a[title="Excluir"]:hover {
+    color: #c0392b;
+}
+
+@media (max-width: 900px) {
+    main {
+        padding: 20px 2px;
+    }
+    table, thead, tbody, th, td, tr {
+        font-size: 13px;
+    }
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    .table-responsive {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 700px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead {
+        display: none;
+    }
+    tr {
+        margin-bottom: 15px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+    td {
+        padding-left: 50%;
+        position: relative;
+        min-height: 40px;
+        border: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    td:before {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: bold;
+        color: #2d3e50;
+        content: attr(data-label);
+    }
+}

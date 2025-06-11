@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cupons de Desconto | Painel do Lojista</title>
+    <link rel="stylesheet" href="css/style.css">
+        <style type="text/css">.ritz .waffle a { color: inherit; }.ritz .waffle .s2{border-left:none;border-bottom:1px SOLID #000000;background-color:#ffffff;text-align:center;font-weight:bold;color:#000000;font-family:docs-Calibri,Arial;font-size:11pt;vertical-align:middle;white-space:nowrap;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s0{border-bottom:1px SOLID #000000;border-right:1px SOLID #000000;background-color:#ffffff;text-align:center;font-weight:bold;color:#000000;font-family:docs-Calibri,Arial;font-size:11pt;vertical-align:middle;white-space:nowrap;direction:ltr;padding:0px 3px 0px 3px;}.ritz .waffle .s1{border-right:none;border-bottom:1px SOLID #000000;background-color:#ffffff;text-align:center;font-weight:bold;color:#000000;font-family:docs-Calibri,Arial;font-size:11pt;vertical-align:middle;white-space:nowrap;direction:ltr;padding:0px 3px 0px 3px;}</style>
+</head>
+<body>
+    <header>
+        <h1>Painel do Lojista</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="Clientes.html">Clientes</a></li>
+                <li><a href="Pedidos.html">Pedidos</a></li>
+                <li><a href="Controle de Estoque.html">Estoque</a></li>
+                <li><a href="Cadastro de Produtos.html">Produtos</a></li>
+                <li><a href="Relatórios de Vendas.html">Relatórios</a></li>
+                <li><a href="INVESTIMENTOS.html">Investimentos</a></li>
+                <li><a href="PLANEJAMENTO.html">Planejamento</a></li>
+                <li><a href="Cupons de Desconto.html" class="active">Cupons</a></li>
+                <li><a href="Configurações da Loja.html">Configurações</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Cupons de Desconto</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código do Cupom</th>
+                        <th>Tipo (R$ ou %)</th>
+                        <th>Valor</th>
+                        <th>Validade</th>
+                        <th>Uso Máximo</th>
+                        <th>Condição (pedido mínimo)</th>
+                        <th>Aplicação</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DESCONTO10</td>
+                        <td>%</td>
+                        <td>10</td>
+                        <td>30/06/2025</td>
+                        <td>100</td>
+                        <td>R$ 100,00</td>
+                        <td>Todos os produtos</td>
+                        <td data-label="Status"><span class="status andamento">Em andamento</span></td>
+                    </tr>
+                    <tr>
+                        <td>FRETEGRATIS</td>
+                        <td>R$</td>
+                        <td>0</td>
+                        <td>15/07/2025</td>
+                        <td>50</td>
+                        <td>R$ 200,00</td>
+                        <td>Produtos selecionados</td>
+                        <td data-label="Status"><span class="status concluido">Concluído</span></td>
+                    </tr>
+                    <tr>
+                        <td>DESCONTO5</td>
+                        <td>%</td>
+                        <td>5</td>
+                        <td>31/12/2025</td>
+                        <td>200</td>
+                        <td>R$ 150,00</td>
+                        <td>Todos os produtos</td>
+                        <td data-label="Status"><span class="status pendente">Pendente</span></td>
+                    </tr>
+                    <!-- Adicione mais linhas conforme necessário -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Painel do Lojista</p>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes | Painel do Lojista</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Painel do Lojista</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="Clientes.html" class="active">Clientes</a></li>
+                <li><a href="Pedidos.html">Pedidos</a></li>
+                <li><a href="Controle de Estoque.html">Estoque</a></li>
+                <li><a href="Cadastro de Produtos.html">Produtos</a></li>
+                <li><a href="Relatórios de Vendas.html">Relatórios</a></li>
+                <li><a href="INVESTIMENTOS.html">Investimentos</a></li>
+                <li><a href="PLANEJAMENTO.html">Planejamento</a></li>
+                <li><a href="Cupons de Desconto.html">Cupons</a></li>
+                <li><a href="Configurações da Loja.html">Configurações</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Clientes</h2>
+        <input type="text" id="buscaCliente" placeholder="Buscar cliente..." class="input-busca">
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Telefone</th>
+                        <th>Endereço</th>
+                        <th>Data de Cadastro</th>
+                        <th>Total de Compras</th>
+                        <th>Pagamento</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="ID">001</td>
+                        <td data-label="Nome">Maria Silva</td>
+                        <td data-label="E-mail">maria@email.com</td>
+                        <td data-label="Telefone">(11) 99999-9999</td>
+                        <td data-label="Endereço">Rua Exemplo, 123</td>
+                        <td data-label="Data de Cadastro">01/06/2025</td>
+                        <td data-label="Total de Compras">R$ 2.500,00</td>
+                        <td data-label="Pagamento">Cartão</td>
+                        <td data-label="Status"><span class="status andamento">Em andamento</span></td>
+                        <td data-label="Ações">
+                            <a href="#" title="Editar">✏️</a>
+                            <a href="#" title="Excluir" style="color:#e74c3c;">🗑️</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="ID">002</td>
+                        <td data-label="Nome">João Souza</td>
+                        <td data-label="E-mail">joao@email.com</td>
+                        <td data-label="Telefone">(11) 98888-8888</td>
+                        <td data-label="Endereço">Av. Central, 456</td>
+                        <td data-label="Data de Cadastro">05/06/2025</td>
+                        <td data-label="Total de Compras">R$ 1.200,00</td>
+                        <td data-label="Pagamento">Pix</td>
+                        <td data-label="Status"><span class="status concluido">Concluído</span></td>
+                        <td data-label="Ações">
+                            <a href="#" title="Editar">✏️</a>
+                            <a href="#" title="Excluir" style="color:#e74c3c;">🗑️</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="ID">003</td>
+                        <td data-label="Nome">Ana Costa</td>
+                        <td data-label="E-mail">ana@email.com</td>
+                        <td data-label="Telefone">(11) 97777-7777</td>
+                        <td data-label="Endereço">Pç. da Sé, 789</td>
+                        <td data-label="Data de Cadastro">10/06/2025</td>
+                        <td data-label="Total de Compras">R$ 750,00</td>
+                        <td data-label="Pagamento">Dinheiro</td>
+                        <td data-label="Status"><span class="status pendente">Pendente</span></td>
+                        <td data-label="Ações">
+                            <a href="#" title="Editar">✏️</a>
+                            <a href="#" title="Excluir" style="color:#e74c3c;">🗑️</a>
+                        </td>
+                    </tr>
+                    <!-- Adicione mais linhas conforme necessário -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Painel do Lojista</p>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedidos | Painel do Lojista</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Painel do Lojista</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="Clientes.html">Clientes</a></li>
+                <li><a href="Pedidos.html" class="active">Pedidos</a></li>
+                <li><a href="Controle de Estoque.html">Estoque</a></li>
+                <li><a href="Cadastro de Produtos.html">Produtos</a></li>
+                <li><a href="Relatórios de Vendas.html">Relatórios</a></li>
+                <li><a href="INVESTIMENTOS.html">Investimentos</a></li>
+                <li><a href="PLANEJAMENTO.html">Planejamento</a></li>
+                <li><a href="Cupons de Desconto.html">Cupons</a></li>
+                <li><a href="Configurações da Loja.html">Configurações</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Pedidos</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID do Pedido</th>
+                        <th>Data</th>
+                        <th>Cliente</th>
+                        <th>Itens</th>
+                        <th>Valor Total</th>
+                        <th>Status</th>
+                        <th>VIA</th>
+                        <th>Forma de Pagamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Exemplo de linha preenchida -->
+                    <tr>
+                        <td>1001</td>
+                        <td>10/06/2025</td>
+                        <td>Maria Silva</td>
+                        <td>2 Camisetas, 1 Calça</td>
+                        <td>R$ 250,00</td>
+                        <td data-label="Status"><span class="status andamento">Em andamento</span></td>
+                        <td>Site</td>
+                        <td>Cartão de Crédito</td>
+                    </tr>
+                    <tr>
+                        <td>1002</td>
+                        <td>11/06/2025</td>
+                        <td>João Souza</td>
+                        <td>1 Boné</td>
+                        <td>R$ 50,00</td>
+                        <td data-label="Status"><span class="status concluido">Concluído</span></td>
+                        <td>Site</td>
+                        <td>PayPal</td>
+                    </tr>
+                    <tr>
+                        <td>1003</td>
+                        <td>12/06/2025</td>
+                        <td>Ana Paula</td>
+                        <td>3 Camisas</td>
+                        <td>R$ 180,00</td>
+                        <td data-label="Status"><span class="status pendente">Pendente</span></td>
+                        <td>Loja Física</td>
+                        <td>Dinheiro</td>
+                    </tr>
+                    <!-- Linhas vazias para novos pedidos -->
+                    <tr>
+                        <td colspan="8" style="text-align:center; color:#888;">Nenhum pedido cadastrado.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Painel do Lojista</p>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>
