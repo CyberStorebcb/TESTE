@@ -153,6 +153,27 @@ a[title="Excluir"]:hover {
     color: #c0392b;
 }
 
+.btn {
+    background: #1abc9c;
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;
+    margin: 5px 2px;
+    transition: background 0.2s;
+}
+.btn:hover {
+    background: #159c82;
+}
+.btn-cancelar {
+    background: #e74c3c;
+}
+.btn-cancelar:hover {
+    background: #c0392b;
+}
+
 @media (max-width: 900px) {
     main {
         padding: 20px 2px;
