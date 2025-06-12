@@ -24,90 +24,50 @@
         </nav>
     </header>
     <main>
-        <h2>Cadastro de Produtos</h2>
-        <div class="table-responsive">
-            <table>
-                <thead>
-                    <tr>
-                        <th>SKU</th>
-                        <th>Nome do Produto</th>
-                        <th>Categoria</th>
-                        <th>Subcategoria</th>
-                        <th>Descrição Curta</th>
-                        <th>Descrição Completa</th>
-                        <th>Marca</th>
-                        <th>Preço Original</th>
-                        <th>Preço Promocional</th>
-                        <th>Estoque</th>
-                        <th>Variações</th>
-                        <th>Peso (kg)</th>
-                        <th>Dimensões (cm)</th>
-                        <th>Tags</th>
-                        <th>Status</th>
-                        <th>Imagens (URLs)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>BLS-PRT-V-G</td>
-                        <td>Bolsa Grande</td>
-                        <td>Acessórios</td>
-                        <td>Bolsas</td>
-                        <td>Bolsa preta grande</td>
-                        <td>Bolsa preta grande em couro sintético, alça ajustável.</td>
-                        <td>KAZÔ</td>
-                        <td>R$ 200,00</td>
-                        <td>R$ 150,00</td>
-                        <td>10</td>
-                        <td>Sem Variações</td>
-                        <td>0.5</td>
-                        <td>30x40x10</td>
-                        <td>bolsa, preta, grande</td>
-                        <td>Ativo</td>
-                        <td>url_da_imagem1, url_da_imagem2</td>
-                    </tr>
-                    <tr>
-                        <td>BLS-PRT-M-G</td>
-                        <td>Bolsa Média</td>
-                        <td>Acessórios</td>
-                        <td>Bolsas</td>
-                        <td>Bolsa preta média</td>
-                        <td>Bolsa preta média em couro sintético, alça ajustável.</td>
-                        <td>KAZÔ</td>
-                        <td>R$ 180,00</td>
-                        <td>R$ 135,00</td>
-                        <td>15</td>
-                        <td>Sem Variações</td>
-                        <td>0.4</td>
-                        <td>25x35x8</td>
-                        <td>bolsa, preta, média</td>
-                        <td>Ativo</td>
-                        <td>url_da_imagem1, url_da_imagem2</td>
-                    </tr>
-                    <tr>
-                        <td>BLS-PRT-P-G</td>
-                        <td>Bolsa Pequena</td>
-                        <td>Acessórios</td>
-                        <td>Bolsas</td>
-                        <td>Bolsa preta pequena</td>
-                        <td>Bolsa preta pequena em couro sintético, alça ajustável.</td>
-                        <td>KAZÔ</td>
-                        <td>R$ 160,00</td>
-                        <td>R$ 120,00</td>
-                        <td>20</td>
-                        <td>Sem Variações</td>
-                        <td>0.3</td>
-                        <td>20x30x5</td>
-                        <td>bolsa, preta, pequena</td>
-                        <td>Ativo</td>
-                        <td>url_da_imagem1, url_da_imagem2</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <section class="produtos-section">
+            <h2>Cadastro de Produtos</h2>
+            <button onclick="adicionarProduto()" class="btn btn-destaque">+ Novo Produto</button>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Descrição</th>
+                            <th>Marca</th>
+                            <th>Preço Original</th>
+                            <th>Preço Promocional</th>
+                            <th>Dimensões (cm)</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="produtos-tbody">
+                        <!-- Linhas geradas dinamicamente pelo JS -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Formulário de edição -->
+            <div id="form-editar-produto" class="form-modal" style="display:none;">
+                <div class="form-modal-content">
+                    <span class="form-close" onclick="cancelarEdicaoProduto()">&times;</span>
+                    <h3>Editar Produto</h3>
+                    <input type="hidden" id="edit-produto-id">
+                    <input type="text" id="edit-produto-nome" placeholder="Nome do Produto" class="input-busca"><br>
+                    <input type="text" id="edit-produto-categoria" placeholder="Categoria" class="input-busca"><br>
+                    <input type="text" id="edit-produto-desc-curta" placeholder="Descrição" class="input-busca"><br>
+                    <input type="text" id="edit-produto-marca" placeholder="Marca" class="input-busca"><br>
+                    <input type="text" id="edit-produto-preco-original" placeholder="Preço Original" class="input-busca"><br>
+                    <input type="text" id="edit-produto-preco-promocional" placeholder="Preço Promocional" class="input-busca"><br>
+                    <input type="text" id="edit-produto-dimensoes" placeholder="Dimensões (cm)" class="input-busca"><br>
+                    <input type="text" id="edit-produto-status" placeholder="Status" class="input-busca"><br>
+                    <button onclick="salvarEdicaoProduto()" class="btn">Salvar</button>
+                    <button onclick="cancelarEdicaoProduto()" class="btn btn-cancelar">Cancelar</button>
+                </div>
+            </div>
+        </section>
     </main>
-    <footer>
-        <p>&copy; 2023 Painel do Lojista. Todos os direitos reservados.</p>
-    </footer>
+   
+    <script src="main.js"></script>
 </body>
 </html>

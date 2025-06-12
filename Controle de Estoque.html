@@ -26,6 +26,7 @@
     </header>
     <main>
         <h2>Controle de Estoque</h2>
+        <button onclick="adicionarEstoque()" class="btn btn-destaque">+ Novo Item de Estoque</button>
         <div class="table-responsive">
             <table>
                 <thead>
@@ -40,45 +41,13 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>BLS-PRT-V-G</td>
-                        <td>Bolsa Grande</td>
-                        <td>10</td>
-                        <td>2</td>
-                        <td>8</td>
-                        <td>10/06/2025</td>
-                        <td>Reposição</td>
-                        <td data-label="Status"><span class="status andamento">Em andamento</span></td>
-                    </tr>
-                    <tr>
-                        <td>BLS-PRT-V-P</td>
-                        <td>Bolsa Pequena</td>
-                        <td>5</td>
-                        <td>1</td>
-                        <td>4</td>
-                        <td>11/06/2025</td>
-                        <td>Nova remessa</td>
-                        <td data-label="Status"><span class="status concluido">Concluído</span></td>
-                    </tr>
-                    <tr>
-                        <td>BLS-PRT-M-G</td>
-                        <td>Bolsa Média</td>
-                        <td>8</td>
-                        <td>3</td>
-                        <td>5</td>
-                        <td>12/06/2025</td>
-                        <td>Em falta</td>
-                        <td data-label="Status"><span class="status pendente">Pendente</span></td>
-                    </tr>
-                    <!-- Adicione mais linhas conforme necessário -->
+                <tbody id="estoque-tbody">
+                    <!-- Linhas geradas pelo JS -->
                 </tbody>
             </table>
         </div>
     </main>
-    <footer>
-        <p>&copy; 2025 Painel do Lojista</p>
-    </footer>
+   
     <script src="main.js"></script>
 </body>
 </html>

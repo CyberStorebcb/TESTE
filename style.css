@@ -1,103 +1,197 @@
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f4f6f8;
+/* Reset básico */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+    min-height: 100vh;
+    color: #263238;
 }
 
+/* Header e menu fixo */
 header {
-    background: #2d3e50;
+    background: #232946;
     color: #fff;
-    padding: 20px 0;
-    text-align: center;
+    padding: 0;
+    box-shadow: 0 2px 12px rgba(44,62,80,0.10);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
-
 header h1 {
-    margin: 0 0 10px 0;
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 28px 0 10px 0;
+    text-align: center;
+    background: linear-gradient(90deg, #16a085 0%, #232946 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
-
+nav {
+    background: #232946;
+    border-bottom: 1px solid #1abc9c22;
+}
 nav ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 0 8px 0;
 }
-
-nav ul li {
-    margin: 0 10px;
-}
-
 nav ul li a {
     color: #fff;
     text-decoration: none;
-    font-weight: bold;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: background 0.2s;
+    font-weight: 500;
+    padding: 10px 22px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    display: inline-block;
 }
-
 nav ul li a.active,
 nav ul li a:active {
+    background: linear-gradient(90deg, #16a085 60%, #138d75 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px #16a08533, 0 2px 0 #16a085 inset;
+    font-weight: 700;
+}
+nav ul li a:hover {
     background: #1abc9c;
     color: #fff;
 }
 
-nav ul li a:hover {
-    background: #1abc9c;
-}
-
+/* Main e cards */
 main {
-    padding: 40px 20px;
+    padding: 48px 20px 32px 20px;
     max-width: 1200px;
-    margin: auto;
+    margin: 40px auto 0 auto;
+    background: transparent;
+}
+.produtos-section, .card-section, .dashboard-card {
     background: #fff;
-    border-radius: 8px;
-    margin-top: 30px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-radius: 18px;
+    box-shadow: 0 6px 32px rgba(44,62,80,0.10);
+    padding: 36px 28px 32px 28px;
+    margin-bottom: 36px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: box-shadow 0.2s;
 }
-
+.produtos-section:hover, .dashboard-card:hover {
+    box-shadow: 0 12px 40px rgba(44,62,80,0.16);
+}
 h2 {
-    margin-top: 0;
-    color: #2d3e50;
+    margin-bottom: 18px;
+    color: #232946;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+.card-grid {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+.dashboard-card {
+    flex: 1 1 220px;
+    min-width: 220px;
+    max-width: 320px;
+    background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+    border: 1.5px solid #16a08522;
+    text-align: center;
+    padding: 32px 18px;
+    margin: 0;
+    transition: box-shadow 0.2s, transform 0.18s;
+}
+.dashboard-card h3 {
+    font-size: 1.2rem;
+    color: #16a085;
+    margin-bottom: 8px;
+}
+.dashboard-card p {
+    font-size: 2.1rem;
+    font-weight: bold;
+    color: #232946;
+}
+.dashboard-card:hover {
+    box-shadow: 0 16px 48px #16a08522;
+    transform: translateY(-4px) scale(1.03);
 }
 
+/* Botões */
+.btn, .btn-destaque {
+    background: linear-gradient(90deg, #16a085 60%, #138d75 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 26px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 8px 2px 18px 0;
+    font-weight: 600;
+    box-shadow: 0 2px 8px #16a08522;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.12s;
+}
+.btn:hover, .btn-destaque:hover {
+    background: #138d75;
+    box-shadow: 0 4px 16px #16a08533;
+}
+.btn:active, .btn-destaque:active {
+    transform: scale(0.97);
+    box-shadow: 0 1px 4px #16a08533;
+}
+.btn-cancelar {
+    background: #e74c3c;
+}
+.btn-cancelar:hover {
+    background: #c0392b;
+}
+
+/* Tabela responsiva e moderna */
 .table-responsive {
     overflow-x: auto;
     margin-top: 20px;
 }
-
 table {
     width: 100%;
     border-collapse: collapse;
     background: #fff;
-    min-width: 600px;
+    min-width: 700px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px #16a08511;
 }
-
 th, td {
     border: 1px solid #e0e0e0;
-    padding: 10px 8px;
+    padding: 13px 10px;
     text-align: left;
+    font-size: 1rem;
 }
-
 th {
     background: #f4f6f8;
     font-weight: bold;
     position: sticky;
     top: 0;
     z-index: 1;
+    color: #16a085;
+    letter-spacing: 0.5px;
 }
-
 tr:nth-child(even) {
-    background: #fafbfc;
+    background: #f8fafb;
 }
-
 tbody tr:hover {
     background: #e8f6f3;
     transition: background 0.2s;
 }
-
 .status {
     font-weight: bold;
     padding: 4px 10px;
@@ -116,81 +210,122 @@ tbody tr:hover {
     background: #f8d7da;
     color: #721c24;
 }
-
-footer {
-    text-align: center;
-    padding: 20px 0;
-    background: #2d3e50;
-    color: #fff;
-    margin-top: 40px;
-}
-
-.input-busca {
-    margin-bottom: 15px;
-    padding: 8px;
-    width: 100%;
-    max-width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 15px;
-    box-sizing: border-box;
-    transition: border 0.2s;
-}
-.input-busca:focus {
-    border: 1.5px solid #1abc9c;
-    outline: none;
-}
 a[title="Editar"], a[title="Excluir"] {
-    font-size: 18px;
-    margin-right: 8px;
+    font-size: 20px;
+    margin-right: 10px;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.2s, background 0.2s, border-radius 0.2s;
+    padding: 2px 6px;
 }
 a[title="Editar"]:hover {
-    color: #1abc9c;
+    color: #16a085;
+    background: #e0f7fa;
+    border-radius: 6px;
 }
 a[title="Excluir"]:hover {
-    color: #c0392b;
+    color: #e74c3c;
+    background: #e0f7fa;
+    border-radius: 6px;
 }
 
-.btn {
-    background: #1abc9c;
-    color: #fff;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 4px;
-    font-size: 15px;
+/* Inputs */
+.input-busca, input[type="text"], input[type="email"] {
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    max-width: 350px;
+    border: 1.5px solid #16a08533;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border 0.2s;
+    background: #f8fafb;
+}
+.input-busca:focus, input[type="text"]:focus, input[type="email"]:focus {
+    border: 1.5px solid #16a085;
+    outline: none;
+    background: #e0f7fa;
+}
+
+/* Modal */
+.form-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(44,62,80,0.25);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-modal-content {
+    background: #fff;
+    padding: 36px 28px 24px 28px;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+    min-width: 320px;
+    max-width: 95vw;
+    position: relative;
+    animation: modalFadeIn 0.3s;
+    transition: box-shadow 0.2s;
+}
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+.form-close {
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    font-size: 32px;
+    color: #888;
     cursor: pointer;
-    margin: 5px 2px;
-    transition: background 0.2s;
+    transition: color 0.2s;
 }
-.btn:hover {
-    background: #159c82;
-}
-.btn-cancelar {
-    background: #e74c3c;
-}
-.btn-cancelar:hover {
-    background: #c0392b;
+.form-close:hover {
+    color: #e74c3c;
 }
 
-@media (max-width: 900px) {
-    main {
-        padding: 20px 2px;
+/* Footer */
+footer {
+    text-align: center;
+    padding: 24px 0 18px 0;
+    background: #232946;
+    color: #fff;
+    margin-top: 60px;
+    border-radius: 0 0 12px 12px;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Responsividade */
+@media (max-width: 1100px) {
+    main, .produtos-section, .card-section {
+        max-width: 98vw;
+        padding: 12px 2vw;
     }
-    table, thead, tbody, th, td, tr {
-        font-size: 13px;
+    table {
+        min-width: 500px;
     }
+}
+@media (max-width: 800px) {
     nav ul {
         flex-direction: column;
         align-items: center;
+        gap: 0;
     }
-    .table-responsive {
-        min-width: 0;
+    .dashboard-card {
+        min-width: 160px;
+        padding: 18px 8px;
+    }
+    table, thead, tbody, th, td, tr {
+        font-size: 0.95rem;
     }
 }
-
-@media (max-width: 700px) {
+@media (max-width: 600px) {
+    main, .produtos-section, .card-section {
+        padding: 8px 2px;
+    }
     table, thead, tbody, th, td, tr {
         display: block;
     }
@@ -207,6 +342,7 @@ a[title="Excluir"]:hover {
         min-height: 40px;
         border: none;
         border-bottom: 1px solid #e0e0e0;
+        font-size: 1rem;
     }
     td:before {
         position: absolute;
@@ -215,7 +351,11 @@ a[title="Excluir"]:hover {
         width: 45%;
         white-space: nowrap;
         font-weight: bold;
-        color: #2d3e50;
+        color: #16a085;
         content: attr(data-label);
+    }
+    .form-modal-content {
+        padding: 14px 4px 10px 4px;
+        min-width: 0;
     }
 }
