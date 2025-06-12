@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Produtos | Painel do Lojista</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Painel do Lojista</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="Clientes.html">Clientes</a></li>
+                <li><a href="Pedidos.html">Pedidos</a></li>
+                <li><a href="Controle de Estoque.html">Estoque</a></li>
+                <li><a href="Produtos.html" class="active">Produtos</a></li>
+                <li><a href="Relatórios de Vendas.html">Relatórios</a></li>
+                <li><a href="INVESTIMENTOS.html">Investimentos</a></li>
+                <li><a href="PLANEJAMENTO.html">Planejamento</a></li>
+                <li><a href="Cupons de Desconto.html">Cupons</a></li>
+                <li><a href="Configurações da Loja.html">Configurações</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Cadastro de Produtos</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Nome do Produto</th>
+                        <th>Categoria</th>
+                        <th>Preço</th>
+                        <th>Estoque</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="produtos-tbody">
+                    <!-- Linhas geradas pelo JS -->
+                </tbody>
+            </table>
+        </div>
+        <div id="form-editar-produto" style="display:none; margin:20px 0;">
+            <h3>Editar Produto</h3>
+            <input type="hidden" id="edit-produto-id">
+            <input type="text" id="edit-produto-sku" placeholder="SKU" class="input-busca"><br>
+            <input type="text" id="edit-produto-nome" placeholder="Nome do Produto" class="input-busca"><br>
+            <input type="text" id="edit-produto-categoria" placeholder="Categoria" class="input-busca"><br>
+            <input type="text" id="edit-produto-preco" placeholder="Preço" class="input-busca"><br>
+            <input type="text" id="edit-produto-estoque" placeholder="Estoque" class="input-busca"><br>
+            <button onclick="salvarEdicaoProduto()" class="btn">Salvar</button>
+            <button onclick="cancelarEdicaoProduto()" class="btn btn-cancelar">Cancelar</button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Painel do Lojista</p>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -39,44 +39,27 @@
                         <th>Forma de Pagamento</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Exemplo de linha preenchida -->
-                    <tr>
-                        <td>1001</td>
-                        <td>10/06/2025</td>
-                        <td>Maria Silva</td>
-                        <td>2 Camisetas, 1 Calça</td>
-                        <td>R$ 250,00</td>
-                        <td data-label="Status"><span class="status andamento">Em andamento</span></td>
-                        <td>Site</td>
-                        <td>Cartão de Crédito</td>
-                    </tr>
-                    <tr>
-                        <td>1002</td>
-                        <td>11/06/2025</td>
-                        <td>João Souza</td>
-                        <td>1 Boné</td>
-                        <td>R$ 50,00</td>
-                        <td data-label="Status"><span class="status concluido">Concluído</span></td>
-                        <td>Site</td>
-                        <td>PayPal</td>
-                    </tr>
-                    <tr>
-                        <td>1003</td>
-                        <td>12/06/2025</td>
-                        <td>Ana Paula</td>
-                        <td>3 Camisas</td>
-                        <td>R$ 180,00</td>
-                        <td data-label="Status"><span class="status pendente">Pendente</span></td>
-                        <td>Loja Física</td>
-                        <td>Dinheiro</td>
-                    </tr>
-                    <!-- Linhas vazias para novos pedidos -->
-                    <tr>
-                        <td colspan="8" style="text-align:center; color:#888;">Nenhum pedido cadastrado.</td>
-                    </tr>
+                <tbody id="pedidos-tbody">
+                    <!-- Linhas geradas pelo JS -->
                 </tbody>
             </table>
+        </div>
+        <div id="form-editar-pedido" style="display:none; margin:20px 0;">
+            <h3>Editar Pedido</h3>
+            <input type="hidden" id="edit-pedido-id">
+            <input type="text" id="edit-pedido-data" placeholder="Data" class="input-busca"><br>
+            <input type="text" id="edit-pedido-cliente" placeholder="Cliente" class="input-busca"><br>
+            <input type="text" id="edit-pedido-itens" placeholder="Itens" class="input-busca"><br>
+            <input type="text" id="edit-pedido-valor" placeholder="Valor Total" class="input-busca"><br>
+            <select id="edit-pedido-status" class="input-busca">
+                <option value="andamento">Em andamento</option>
+                <option value="concluido">Concluído</option>
+                <option value="pendente">Pendente</option>
+            </select><br>
+            <input type="text" id="edit-pedido-via" placeholder="VIA" class="input-busca"><br>
+            <input type="text" id="edit-pedido-pagamento" placeholder="Forma de Pagamento" class="input-busca"><br>
+            <button onclick="salvarEdicaoPedido()" class="btn">Salvar</button>
+            <button onclick="cancelarEdicaoPedido()" class="btn btn-cancelar">Cancelar</button>
         </div>
     </main>
     <footer>
