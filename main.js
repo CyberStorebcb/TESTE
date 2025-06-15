@@ -126,12 +126,13 @@ function renderPedidos() {
     pedidos.forEach((p, i) => {
         tbody.innerHTML += `
             <tr>
+                <td data-label="ID do Pedido">${p.id || (i + 1)}</td>
                 <td data-label="Data">${p.data || ''}</td>
                 <td data-label="Cliente">${p.cliente || ''}</td>
-                <td data-label="Item">${p.itens || ''}</td>
+                <td data-label="Itens">${p.itens || ''}</td>
                 <td data-label="Valor Total">${p.valor || ''}</td>
                 <td data-label="Status"><span class="status ${p.status || ''}">${statusLabel(p.status)}</span></td>
-                <td data-label="Endereço">${p.endereco || ''}</td>
+                <td data-label="VIA">${p.endereco || ''}</td>
                 <td data-label="Forma de Pagamento">${p.pagamento || ''}</td>
                 <td data-label="Ações">
                     <a href="#" title="Editar" onclick="editarPedido(${i});return false;">✏️</a>
@@ -169,7 +170,11 @@ window.salvarAdicionarPedido = function() {
         return;
     }
     const pedidos = getPedidos();
-    pedidos.push({ data, cliente, itens, valor, status, endereco, pagamento });
+    const novo = {
+        id: (pedidos.length + 1).toString().padStart(3, '0'),
+        data, cliente, itens, valor, status, endereco, pagamento
+    };
+    pedidos.push(novo);
     setPedidos(pedidos);
     fecharAdicionarPedido();
     renderPedidos();
@@ -196,6 +201,7 @@ window.salvarEdicaoPedido = function() {
     const idx = document.getElementById('edit-pedido-id').value;
     const pedidos = getPedidos();
     pedidos[idx] = {
+        id: pedidos[idx].id, // mantém o id original
         data: document.getElementById('edit-pedido-data').value,
         cliente: document.getElementById('edit-pedido-cliente').value,
         itens: document.getElementById('edit-pedido-itens').value,
