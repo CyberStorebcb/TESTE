@@ -111,11 +111,17 @@ function setPedidos(pedidos) {
     localStorage.setItem('pedidos', JSON.stringify(pedidos));
 }
 
-// Renderização
+// Renderização com busca dinâmica
 function renderPedidos() {
     const tbody = document.getElementById('pedidos-tbody');
     if (!tbody) return;
-    const pedidos = getPedidos();
+    const busca = (document.getElementById('buscaPedido')?.value || '').toLowerCase();
+    let pedidos = getPedidos();
+    if (busca) {
+        pedidos = pedidos.filter(p =>
+            Object.values(p).some(val => (val || '').toString().toLowerCase().includes(busca))
+        );
+    }
     tbody.innerHTML = '';
     pedidos.forEach((p, i) => {
         tbody.innerHTML += `
@@ -136,13 +142,40 @@ function renderPedidos() {
     });
 }
 
-function statusLabel(status) {
-    if (status === 'andamento') return 'Em andamento';
-    if (status === 'concluido') return 'Concluído';
-    if (status === 'pendente') return 'Pendente';
-    return status || '';
+// Modal de adicionar pedido
+window.abrirAdicionarPedido = function() {
+    document.getElementById('add-pedido-data').value = '';
+    document.getElementById('add-pedido-cliente').value = '';
+    document.getElementById('add-pedido-itens').value = '';
+    document.getElementById('add-pedido-valor').value = '';
+    document.getElementById('add-pedido-status').value = 'andamento';
+    document.getElementById('add-pedido-via').value = '';
+    document.getElementById('add-pedido-pagamento').value = '';
+    document.getElementById('form-adicionar-pedido').style.display = 'flex';
+}
+window.fecharAdicionarPedido = function() {
+    document.getElementById('form-adicionar-pedido').style.display = 'none';
+}
+window.salvarAdicionarPedido = function() {
+    const data = document.getElementById('add-pedido-data').value.trim();
+    const cliente = document.getElementById('add-pedido-cliente').value.trim();
+    const itens = document.getElementById('add-pedido-itens').value.trim();
+    const valor = document.getElementById('add-pedido-valor').value.trim();
+    const status = document.getElementById('add-pedido-status').value;
+    const endereco = document.getElementById('add-pedido-via').value.trim();
+    const pagamento = document.getElementById('add-pedido-pagamento').value.trim();
+    if (!data || !cliente || !itens || !valor || !status || !endereco || !pagamento) {
+        alert('Preencha todos os campos!');
+        return;
+    }
+    const pedidos = getPedidos();
+    pedidos.push({ data, cliente, itens, valor, status, endereco, pagamento });
+    setPedidos(pedidos);
+    fecharAdicionarPedido();
+    renderPedidos();
 }
 
+// Modal de editar pedido
 window.editarPedido = function(idx) {
     const pedidos = getPedidos();
     const p = pedidos[idx];
@@ -151,12 +184,14 @@ window.editarPedido = function(idx) {
     document.getElementById('edit-pedido-cliente').value = p.cliente || '';
     document.getElementById('edit-pedido-itens').value = p.itens || '';
     document.getElementById('edit-pedido-valor').value = p.valor || '';
-    document.getElementById('edit-pedido-status').value = p.status || '';
+    document.getElementById('edit-pedido-status').value = p.status || 'andamento';
     document.getElementById('edit-pedido-via').value = p.endereco || '';
     document.getElementById('edit-pedido-pagamento').value = p.pagamento || '';
-    document.getElementById('form-editar-pedido').style.display = 'block';
+    document.getElementById('form-editar-pedido').style.display = 'flex';
 }
-
+window.cancelarEdicaoPedido = function() {
+    document.getElementById('form-editar-pedido').style.display = 'none';
+}
 window.salvarEdicaoPedido = function() {
     const idx = document.getElementById('edit-pedido-id').value;
     const pedidos = getPedidos();
@@ -174,10 +209,7 @@ window.salvarEdicaoPedido = function() {
     renderPedidos();
 }
 
-window.cancelarEdicaoPedido = function() {
-    document.getElementById('form-editar-pedido').style.display = 'none';
-}
-
+// Excluir pedido
 window.excluirPedido = function(idx) {
     if (confirm('Deseja excluir este pedido?')) {
         const pedidos = getPedidos();
@@ -187,28 +219,20 @@ window.excluirPedido = function(idx) {
     }
 }
 
-// Adicionar novo pedido
-window.adicionarPedido = function() {
-    const pedidos = getPedidos();
-    const novo = {
-        data: prompt('Data:'),
-        cliente: prompt('Cliente:'),
-        itens: prompt('Item:'),
-        valor: prompt('Valor Total:'),
-        status: prompt('Status (andamento/concluido/pendente):'),
-        endereco: prompt('Endereço:'),
-        pagamento: prompt('Forma de Pagamento:')
-    };
-    if (novo.data && novo.cliente && novo.itens && novo.valor && novo.status && novo.endereco && novo.pagamento) {
-        pedidos.push(novo);
-        setPedidos(pedidos);
-        renderPedidos();
+// Busca dinâmica
+function setupBuscaPedidos() {
+    const busca = document.getElementById('buscaPedido');
+    if (busca) {
+        busca.addEventListener('input', renderPedidos);
     }
 }
 
 // Inicialização automática na página de pedidos
 document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('pedidos-tbody')) renderPedidos();
+    if (document.getElementById('pedidos-tbody')) {
+        renderPedidos();
+        setupBuscaPedidos();
+    }
 });
 
 // ===================== PRODUTOS =====================
@@ -641,4 +665,36 @@ function atualizarTotalEstoque() {
     });
     const el = document.getElementById('estoque-total-produtos');
     if (el) el.textContent = total;
+}
+
+// ===================== ADICIONAR CLIENTE =====================
+
+window.abrirAdicionarCliente = function() {
+    document.getElementById('add-nome').value = '';
+    document.getElementById('add-email').value = '';
+    document.getElementById('add-telefone').value = '';
+    document.getElementById('form-adicionar').style.display = 'flex';
+}
+window.fecharAdicionarCliente = function() {
+    document.getElementById('form-adicionar').style.display = 'none';
+}
+window.salvarAdicionarCliente = function() {
+    const nome = document.getElementById('add-nome').value.trim();
+    const email = document.getElementById('add-email').value.trim();
+    const telefone = document.getElementById('add-telefone').value.trim();
+    if (!nome || !email || !telefone) {
+        alert('Preencha todos os campos!');
+        return;
+    }
+    const clientes = getClientes();
+    const novo = {
+        id: (clientes.length + 1).toString().padStart(3, '0'),
+        nome,
+        email,
+        telefone
+    };
+    clientes.push(novo);
+    setClientes(clientes);
+    fecharAdicionarCliente();
+    renderClientes();
 }

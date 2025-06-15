@@ -25,17 +25,18 @@
     </header>
     <main>
         <h2>Clientes</h2>
-        <input type="text" id="buscaCliente" placeholder="Buscar cliente..." class="input-busca">
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:18px;">
+            <button onclick="abrirAdicionarCliente()" class="btn btn-destaque">+ Novo Cliente</button>
+            <input type="text" id="buscaCliente" placeholder="Buscar cliente..." class="input-busca">
+        </div>
         <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Telefone</th>
-                        <th>Endereço</th>
-                        <th>Total de Compras</th>
-                        <th>Pagamento</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -44,18 +45,32 @@
                 </tbody>
             </table>
         </div>
-        <div id="form-editar" style="display:none; margin:20px 0;">
-            <h3>Editar Cliente</h3>
-            <input type="hidden" id="edit-id">
-            <input type="text" id="edit-nome" placeholder="Nome" class="input-busca"><br>
-            <input type="email" id="edit-email" placeholder="E-mail" class="input-busca"><br>
-            <input type="text" id="edit-telefone" placeholder="Telefone" class="input-busca"><br>
-            <button onclick="salvarEdicao()" class="btn">Salvar</button>
-            <button onclick="cancelarEdicao()" class="btn btn-cancelar">Cancelar</button>
+        <!-- Modal de editar cliente -->
+        <div id="form-editar" class="form-modal" style="display:none;">
+            <div class="form-modal-content">
+                <span class="form-close" onclick="cancelarEdicao()">&times;</span>
+                <h3>Editar Cliente</h3>
+                <input type="hidden" id="edit-id">
+                <input type="text" id="edit-nome" placeholder="Nome" class="input-busca"><br>
+                <input type="email" id="edit-email" placeholder="E-mail" class="input-busca"><br>
+                <input type="text" id="edit-telefone" placeholder="Telefone" class="input-busca"><br>
+                <button onclick="salvarEdicao()" class="btn">Salvar</button>
+                <button onclick="cancelarEdicao()" class="btn btn-cancelar">Cancelar</button>
+            </div>
         </div>
-        <button onclick="adicionarCliente()" class="btn btn-destaque">+ Novo Cliente</button>
+        <!-- Modal de adicionar cliente -->
+        <div id="form-adicionar" class="form-modal" style="display:none;">
+            <div class="form-modal-content">
+                <span class="form-close" onclick="fecharAdicionarCliente()">&times;</span>
+                <h3>Novo Cliente</h3>
+                <input type="text" id="add-nome" placeholder="Nome" class="input-busca"><br>
+                <input type="email" id="add-email" placeholder="E-mail" class="input-busca"><br>
+                <input type="text" id="add-telefone" placeholder="Telefone" class="input-busca"><br>
+                <button onclick="salvarAdicionarCliente()" class="btn">Salvar</button>
+                <button onclick="fecharAdicionarCliente()" class="btn btn-cancelar">Cancelar</button>
+            </div>
+        </div>
     </main>
-    
     <script src="main.js"></script>
 </body>
 </html>
