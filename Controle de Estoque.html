@@ -11,8 +11,7 @@
         <nav>
             <ul>
                 <li><a href="index.html">Início</a></li>
-                <li><a href="Clientes.html">Clientes</a></li>
-                <li><a href="Pedidos.html">Pedidos</a></li>
+                <li><a href="Vendas.html">Vendas</a></li>
                 <li><a href="Controle de Estoque.html" class="active">Estoque</a></li>
                 <li><a href="Cadastro de Produtos.html">Produtos</a></li>
                 <li><a href="Relatórios de Vendas.html">Relatórios</a></li>
@@ -28,6 +27,60 @@
             <div class="dashboard-card estoque-total-card">
                 <h3>Total em Estoque</h3>
                 <p id="estoque-total-produtos">0</p>
+            </div>
+        </div>
+        <section class="estoque-section">
+            <div class="estoque-actions">
+                <button onclick="abrirModalEstoque()" class="btn btn-destaque">+ Novo Item de Estoque</button>
+                <input type="text" id="buscaEstoque" placeholder="Buscar no estoque..." class="input-busca">
+                <select id="filtroStatusEstoque" class="input-busca" style="max-width:180px;">
+                    <option value="">Todos os Status</option>
+                    <option value="andamento">Em andamento</option>
+                    <option value="concluido">Concluído</option>
+                    <option value="pendente">Pendente</option>
+                </select>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Nome</th>
+                            <th>Entrada</th>
+                            <th>Saída</th>
+                            <th>Estoque Atual</th>
+                            <th>Data</th>
+                            <th>Observações</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="estoque-tbody">
+                        <!-- Linhas geradas pelo JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- Modal de adicionar/editar estoque -->
+        <div id="modal-estoque" class="form-modal" style="display:none;">
+            <div class="form-modal-content">
+                <span class="form-close" onclick="fecharModalEstoque()">&times;</span>
+                <h3 id="modal-estoque-titulo">Novo Item de Estoque</h3>
+                <input type="hidden" id="estoque-idx">
+                <input type="text" id="estoque-sku" placeholder="SKU" class="input-busca"><br>
+                <input type="text" id="estoque-nome" placeholder="Nome do Produto" class="input-busca"><br>
+                <input type="text" id="estoque-entrada" placeholder="Entrada" class="input-busca"><br>
+                <input type="text" id="estoque-saida" placeholder="Saída" class="input-busca"><br>
+                <input type="text" id="estoque-atual" placeholder="Estoque Atual" class="input-busca"><br>
+                <input type="text" id="estoque-data" placeholder="Data" class="input-busca"><br>
+                <input type="text" id="estoque-obs" placeholder="Observações" class="input-busca"><br>
+                <select id="estoque-status" class="input-busca">
+                    <option value="andamento">Em andamento</option>
+                    <option value="concluido">Concluído</option>
+                    <option value="pendente">Pendente</option>
+                </select><br>
+                <button onclick="salvarEstoqueModal()" class="btn">Salvar</button>
+                <button onclick="fecharModalEstoque()" class="btn btn-cancelar">Cancelar</button>
             </div>
         </div>
     </main>
