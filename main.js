@@ -160,19 +160,56 @@ window.fecharAdicionarPedido = function() {
 window.salvarAdicionarPedido = function() {
     const data = document.getElementById('add-pedido-data').value.trim();
     const cliente = document.getElementById('add-pedido-cliente').value.trim();
-    const itens = document.getElementById('add-pedido-itens').value.trim();
-    const valor = document.getElementById('add-pedido-valor').value.trim();
     const status = document.getElementById('add-pedido-status').value;
     const endereco = document.getElementById('add-pedido-via').value.trim();
     const pagamento = document.getElementById('add-pedido-pagamento').value.trim();
-    if (!data || !cliente || !itens || !valor || !status || !endereco || !pagamento) {
-        alert('Preencha todos os campos!');
+    const valor = document.getElementById('add-pedido-valor').value.trim();
+
+    // Coleta itens
+    const lista = document.getElementById('pedido-itens-lista');
+    const selects = lista.querySelectorAll('.pedido-item-select');
+    const qtds = lista.querySelectorAll('.pedido-item-qtd');
+    let itensArr = [];
+    let erroEstoque = false;
+    let estoque = getEstoque();
+
+    selects.forEach((sel, i) => {
+        const label = sel.value;
+        const qtd = parseInt(qtds[i].value) || 1;
+        const option = sel.selectedOptions[0];
+        const estoqueDisponivel = option ? parseInt(option.getAttribute('data-estoque')) : 0;
+        if (label) {
+            if (qtd > estoqueDisponivel) erroEstoque = true;
+            itensArr.push({ label, qtd });
+        }
+    });
+
+    if (!data || !cliente || !status || !endereco || !pagamento || !valor || itensArr.length === 0) {
+        alert('Preencha todos os campos e adicione pelo menos um item!');
         return;
     }
+    if (erroEstoque) {
+        alert('Um ou mais itens estão com estoque insuficiente!');
+        return;
+    }
+
+    // Atualiza estoque
+    itensArr.forEach(item => {
+        const idx = estoque.findIndex(e => (e.nome + (e.descricao ? ' - ' + e.descricao : '')) === item.label);
+        if (idx >= 0) {
+            estoque[idx].estoqueAtual = (parseInt(estoque[idx].estoqueAtual) - item.qtd).toString();
+        }
+    });
+    setEstoque(estoque);
+    renderEstoque && renderEstoque();
+
+    // Salva pedido
     const pedidos = getPedidos();
     const novo = {
         id: (pedidos.length + 1).toString().padStart(3, '0'),
-        data, cliente, itens, valor, status, endereco, pagamento
+        data, cliente,
+        itens: itensArr.map(i => `${i.label} (Qtd: ${i.qtd})`).join(', '),
+        valor, status, endereco, pagamento
     };
     pedidos.push(novo);
     setPedidos(pedidos);
@@ -713,3 +750,104 @@ window.salvarAdicionarCliente = function() {
     fecharAdicionarCliente();
     renderClientes();
 }
+
+// ===================== ADICIONAR PEDIDO =====================
+
+function preencherItensEstoqueDatalist() {
+    const datalist = document.getElementById('estoque-itens-list');
+    if (!datalist) return;
+    datalist.innerHTML = '';
+    const estoque = getEstoque();
+    estoque.forEach(e => {
+        // Mostra nome + descrição, se houver
+        const label = e.nome ? (e.nome + (e.descricao ? ' - ' + e.descricao : '')) : '';
+        if (label) {
+            const option = document.createElement('option');
+            option.value = label;
+            datalist.appendChild(option);
+        }
+    });
+}
+
+// Atualiza o datalist sempre que abrir o modal de novo pedido
+const originalAbrirAdicionarPedido = window.abrirAdicionarPedido;
+window.abrirAdicionarPedido = function() {
+    preencherItensEstoqueDatalist();
+    originalAbrirAdicionarPedido();
+};
+
+// --- Múltiplos itens no pedido ---
+
+function getEstoqueItensParaSelect() {
+    const estoque = getEstoque();
+    return estoque
+        .filter(e => (parseFloat(e.estoqueAtual) || 0) > 0)
+        .map(e => ({
+            label: e.nome + (e.descricao ? ' - ' + e.descricao : ''),
+            preco: parseFloat(e.precoOriginal) || 0,
+            id: e.sku || e.nome,
+            estoque: parseFloat(e.estoqueAtual) || 0
+        }));
+}
+
+window.adicionarLinhaItemPedido = function() {
+    const lista = document.getElementById('pedido-itens-lista');
+    const itens = getEstoqueItensParaSelect();
+    const idx = lista.children.length;
+    const div = document.createElement('div');
+    div.style.display = 'flex';
+    div.style.gap = '8px';
+    div.style.marginBottom = '6px';
+    div.innerHTML = `
+        <select class="pedido-item-select input-busca" style="min-width:180px;">
+            <option value="">Selecione o item</option>
+            ${itens.map(i => `<option value="${i.label}" data-preco="${i.preco}" data-estoque="${i.estoque}">${i.label} (Estoque: ${i.estoque})</option>`).join('')}
+        </select>
+        <input type="number" min="1" value="1" class="pedido-item-qtd input-busca" style="width:60px;" placeholder="Qtd">
+        <button type="button" class="btn btn-cancelar" onclick="this.parentElement.remove();atualizarResumoPedido()">Remover</button>
+    `;
+    lista.appendChild(div);
+    div.querySelector('.pedido-item-select').addEventListener('change', atualizarResumoPedido);
+    div.querySelector('.pedido-item-qtd').addEventListener('input', atualizarResumoPedido);
+    atualizarResumoPedido();
+};
+
+function atualizarResumoPedido() {
+    const lista = document.getElementById('pedido-itens-lista');
+    const selects = lista.querySelectorAll('.pedido-item-select');
+    const qtds = lista.querySelectorAll('.pedido-item-qtd');
+    const resumoDiv = document.getElementById('pedido-resumo');
+    let total = 0;
+    let resumo = '';
+    let erroEstoque = false;
+    selects.forEach((sel, i) => {
+        const label = sel.value;
+        const qtd = parseInt(qtds[i].value) || 1;
+        const option = sel.selectedOptions[0];
+        const preco = option ? parseFloat(option.getAttribute('data-preco')) : 0;
+        const estoque = option ? parseInt(option.getAttribute('data-estoque')) : 0;
+        if (label) {
+            if (qtd > estoque) {
+                resumo += `<div style="color:#e74c3c;">${label} - Qtd: ${qtd} (Estoque insuficiente!)</div>`;
+                erroEstoque = true;
+            } else {
+                resumo += `<div>${label} - Qtd: ${qtd} x R$ ${preco.toFixed(2)} = <b>R$ ${(preco*qtd).toFixed(2)}</b></div>`;
+                total += preco * qtd;
+            }
+        }
+    });
+    resumoDiv.innerHTML = resumo || '<span style="color:#888;">Nenhum item selecionado.</span>';
+    document.getElementById('add-pedido-valor').value = total ? total.toFixed(2) : '';
+    document.getElementById('add-pedido-valor').style.background = erroEstoque ? '#ffe5e5' : '';
+    return !erroEstoque;
+}
+
+// Ao abrir modal, inicializa área de itens
+const originalAbrirAdicionarPedidoMulti = window.abrirAdicionarPedido;
+window.abrirAdicionarPedido = function() {
+    originalAbrirAdicionarPedido();
+    document.getElementById('pedido-itens-lista').innerHTML = '';
+    document.getElementById('pedido-resumo').innerHTML = '';
+    document.getElementById('add-pedido-valor').value = '';
+    adicionarLinhaItemPedido();
+};

@@ -90,8 +90,20 @@
                 <h3>Novo Pedido</h3>
                 <input type="date" id="add-pedido-data" placeholder="Data" class="input-busca"><br>
                 <input type="text" id="add-pedido-cliente" placeholder="Cliente" class="input-busca"><br>
-                <input type="text" id="add-pedido-itens" placeholder="Itens" class="input-busca"><br>
-                <input type="text" id="add-pedido-valor" placeholder="Valor Total" class="input-busca"><br>
+                <input type="text" id="add-pedido-itens" placeholder="Pesquisar e selecionar item do estoque..." class="input-busca" list="estoque-itens-list"><br>
+                <datalist id="estoque-itens-list">
+                    <!-- Opções geradas pelo JS -->
+                </datalist>
+                <div id="pedido-itens-area">
+                    <label>Itens do Pedido:</label>
+                    <div id="pedido-itens-lista"></div>
+                    <button type="button" class="btn" onclick="adicionarLinhaItemPedido()">+ Adicionar Item</button>
+                </div>
+                <div style="margin:10px 0;">
+                    <strong>Resumo:</strong>
+                    <div id="pedido-resumo"></div>
+                </div>
+                <input type="text" id="add-pedido-valor" placeholder="Valor Total" class="input-busca" readonly><br>
                 <select id="add-pedido-status" class="input-busca">
                     <option value="concluido">Concluído</option>
                     <option value="pendente">Pendente</option>
