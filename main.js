@@ -427,8 +427,11 @@ window.abrirModalEstoque = function(idx) {
         document.getElementById('estoque-entrada').value = e.entrada || '';
         document.getElementById('estoque-saida').value = e.saida || '';
         document.getElementById('estoque-atual').value = e.estoqueAtual || '';
-        document.getElementById('estoque-data').value = e.data || '';
-        document.getElementById('estoque-obs').value = e.observacoes || '';
+        document.getElementById('estoque-data').value = e.dataCatalogada || '';
+        document.getElementById('estoque-preco-custo').value = e.precoCusto || '';
+        document.getElementById('estoque-preco-original').value = e.precoOriginal || '';
+        document.getElementById('estoque-preco-promocional').value = e.precoPromocional || '';
+        document.getElementById('estoque-descricao').value = e.descricao || '';
         document.getElementById('estoque-status').value = (e.status || '').toLowerCase();
     } else {
         document.getElementById('estoque-idx').value = '';
@@ -438,7 +441,10 @@ window.abrirModalEstoque = function(idx) {
         document.getElementById('estoque-saida').value = '';
         document.getElementById('estoque-atual').value = '';
         document.getElementById('estoque-data').value = '';
-        document.getElementById('estoque-obs').value = '';
+        document.getElementById('estoque-preco-custo').value = '';
+        document.getElementById('estoque-preco-original').value = '';
+        document.getElementById('estoque-preco-promocional').value = '';
+        document.getElementById('estoque-descricao').value = '';
         document.getElementById('estoque-status').value = 'andamento';
     }
     document.getElementById('modal-estoque').style.display = 'flex';
@@ -449,15 +455,19 @@ window.fecharModalEstoque = function() {
 window.salvarEstoqueModal = function() {
     const idx = document.getElementById('estoque-idx').value;
     const novo = {
-        sku: document.getElementById('estoque-sku').value,
-        nome: document.getElementById('estoque-nome').value,
-        entrada: document.getElementById('estoque-entrada').value,
-        saida: document.getElementById('estoque-saida').value,
-        estoqueAtual: document.getElementById('estoque-atual').value,
-        data: document.getElementById('estoque-data').value,
-        observacoes: document.getElementById('estoque-obs').value,
+        sku: document.getElementById('estoque-sku').value.trim(),
+        nome: document.getElementById('estoque-nome').value.trim(),
+        entrada: document.getElementById('estoque-entrada').value.trim(),
+        saida: document.getElementById('estoque-saida').value.trim(),
+        estoqueAtual: document.getElementById('estoque-atual').value.trim(),
+        dataCatalogada: document.getElementById('estoque-data').value.trim(),
+        precoCusto: document.getElementById('estoque-preco-custo').value.trim(),
+        precoOriginal: document.getElementById('estoque-preco-original').value.trim(),
+        precoPromocional: document.getElementById('estoque-preco-promocional').value.trim(),
+        descricao: document.getElementById('estoque-descricao').value.trim(),
         status: document.getElementById('estoque-status').value
     };
+    // Validação básica de campos obrigatórios
     if (!novo.sku || !novo.nome) {
         alert('SKU e Nome do Produto são obrigatórios!');
         return;
