@@ -335,10 +335,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===================== ESTOQUE =====================
 
-// Dados iniciais
-const estoquePadrao = []; // Começa vazio
+const estoquePadrao = [];
 
-// Utilitários
 function getEstoque() {
     return JSON.parse(localStorage.getItem('estoque')) || estoquePadrao;
 }
@@ -346,69 +344,123 @@ function setEstoque(estoque) {
     localStorage.setItem('estoque', JSON.stringify(estoque));
 }
 
-// Renderização
+// Renderização com busca e filtro
 function renderEstoque() {
     const tbody = document.getElementById('estoque-tbody');
     if (!tbody) return;
-    const estoque = getEstoque();
+    const busca = (document.getElementById('buscaEstoque')?.value || '').toLowerCase();
+    const filtro = document.getElementById('filtroStatusEstoque')?.value || '';
+    let estoque = getEstoque();
+    if (busca) {
+        estoque = estoque.filter(e =>
+            Object.values(e).some(val => (val || '').toString().toLowerCase().includes(busca))
+        );
+    }
+    if (filtro) {
+        estoque = estoque.filter(e => (e.status || '').toLowerCase() === filtro);
+    }
     tbody.innerHTML = '';
     estoque.forEach((e, i) => {
         tbody.innerHTML += `
             <tr>
                 <td data-label="SKU">${e.sku || ''}</td>
-                <td data-label="Nome do Produto">${e.nome || ''}</td>
+                <td data-label="Nome">${e.nome || ''}</td>
                 <td data-label="Entrada">${e.entrada || ''}</td>
                 <td data-label="Saída">${e.saida || ''}</td>
                 <td data-label="Estoque Atual">${e.estoqueAtual || ''}</td>
                 <td data-label="Data">${e.data || ''}</td>
                 <td data-label="Observações">${e.observacoes || ''}</td>
-                <td data-label="Status">${e.status || ''}</td>
+                <td data-label="Status">
+                    <span class="status ${e.status ? e.status.toLowerCase() : ''}">${statusLabel(e.status)}</span>
+                    <button onclick="mudarStatusEstoque(${i})" class="btn btn-status" title="Mudar Status" style="padding:2px 10px;font-size:0.9em;margin-left:5px;">Mudar</button>
+                </td>
                 <td data-label="Ações">
-                    <a href="#" title="Editar" onclick="editarEstoque(${i});return false;">✏️</a>
-                    <a href="#" title="Excluir" onclick="excluirEstoque(${i});return false;" style="color:#e74c3c;">🗑️</a>
+                    <button onclick="abrirModalEstoque(${i})" class="btn btn-editar" title="Editar" style="padding:2px 10px;font-size:0.9em;">Editar</button>
+                    <button onclick="excluirEstoque(${i})" class="btn btn-cancelar" title="Excluir" style="padding:2px 10px;font-size:0.9em;">Excluir</button>
                 </td>
             </tr>
         `;
     });
+    atualizarTotalEstoque();
 }
 
-// Adicionar novo item de estoque
-window.adicionarEstoque = function() {
-    const estoque = getEstoque();
+function statusLabel(status) {
+    if (!status) return '';
+    if (status.toLowerCase() === 'andamento') return 'Em andamento';
+    if (status.toLowerCase() === 'concluido') return 'Concluído';
+    if (status.toLowerCase() === 'pendente') return 'Pendente';
+    return status;
+}
+
+// Modal de adicionar/editar
+window.abrirModalEstoque = function(idx) {
+    document.getElementById('modal-estoque-titulo').textContent = idx !== undefined ? 'Editar Item de Estoque' : 'Novo Item de Estoque';
+    document.getElementById('estoque-idx').value = idx !== undefined ? idx : '';
+    if (idx !== undefined) {
+        const e = getEstoque()[idx];
+        document.getElementById('estoque-sku').value = e.sku || '';
+        document.getElementById('estoque-nome').value = e.nome || '';
+        document.getElementById('estoque-entrada').value = e.entrada || '';
+        document.getElementById('estoque-saida').value = e.saida || '';
+        document.getElementById('estoque-atual').value = e.estoqueAtual || '';
+        document.getElementById('estoque-data').value = e.data || '';
+        document.getElementById('estoque-obs').value = e.observacoes || '';
+        document.getElementById('estoque-status').value = (e.status || '').toLowerCase();
+    } else {
+        document.getElementById('estoque-idx').value = '';
+        document.getElementById('estoque-sku').value = '';
+        document.getElementById('estoque-nome').value = '';
+        document.getElementById('estoque-entrada').value = '';
+        document.getElementById('estoque-saida').value = '';
+        document.getElementById('estoque-atual').value = '';
+        document.getElementById('estoque-data').value = '';
+        document.getElementById('estoque-obs').value = '';
+        document.getElementById('estoque-status').value = 'andamento';
+    }
+    document.getElementById('modal-estoque').style.display = 'flex';
+}
+window.fecharModalEstoque = function() {
+    document.getElementById('modal-estoque').style.display = 'none';
+}
+window.salvarEstoqueModal = function() {
+    const idx = document.getElementById('estoque-idx').value;
     const novo = {
-        sku: prompt('SKU:'),
-        nome: prompt('Nome do Produto:'),
-        entrada: prompt('Entrada:'),
-        saida: prompt('Saída:'),
-        estoqueAtual: prompt('Estoque Atual:'),
-        data: prompt('Data:'),
-        observacoes: prompt('Observações:'),
-        status: prompt('Status:')
+        sku: document.getElementById('estoque-sku').value,
+        nome: document.getElementById('estoque-nome').value,
+        entrada: document.getElementById('estoque-entrada').value,
+        saida: document.getElementById('estoque-saida').value,
+        estoqueAtual: document.getElementById('estoque-atual').value,
+        data: document.getElementById('estoque-data').value,
+        observacoes: document.getElementById('estoque-obs').value,
+        status: document.getElementById('estoque-status').value
     };
-    if (novo.sku && novo.nome) {
-        estoque.push(novo);
-        setEstoque(estoque);
-        renderEstoque();
+    if (!novo.sku || !novo.nome) {
+        alert('SKU e Nome do Produto são obrigatórios!');
+        return;
     }
+    const estoque = getEstoque();
+    if (idx === '') {
+        estoque.push(novo);
+    } else {
+        estoque[idx] = novo;
+    }
+    setEstoque(estoque);
+    fecharModalEstoque();
+    renderEstoque();
 }
 
-// Editar item de estoque
-window.editarEstoque = function(idx) {
+// Mudar status rapidamente
+window.mudarStatusEstoque = function(idx) {
     const estoque = getEstoque();
-    const e = estoque[idx];
-    const sku = prompt('SKU:', e.sku || '');
-    const nome = prompt('Nome do Produto:', e.nome || '');
-    const entrada = prompt('Entrada:', e.entrada || '');
-    const saida = prompt('Saída:', e.saida || '');
-    const estoqueAtual = prompt('Estoque Atual:', e.estoqueAtual || '');
-    const data = prompt('Data:', e.data || '');
-    const observacoes = prompt('Observações:', e.observacoes || '');
-    const status = prompt('Status:', e.status || '');
-    if (sku && nome) {
-        estoque[idx] = { sku, nome, entrada, saida, estoqueAtual, data, observacoes, status };
-        setEstoque(estoque);
-        renderEstoque();
-    }
+    const statusAtual = estoque[idx].status ? estoque[idx].status.toLowerCase() : '';
+    let novoStatus = '';
+    if (statusAtual === 'andamento') novoStatus = 'concluido';
+    else if (statusAtual === 'concluido') novoStatus = 'pendente';
+    else if (statusAtual === 'pendente') novoStatus = 'andamento';
+    else novoStatus = 'andamento';
+    estoque[idx].status = novoStatus;
+    setEstoque(estoque);
+    renderEstoque();
 }
 
 // Excluir item de estoque
@@ -421,9 +473,146 @@ window.excluirEstoque = function(idx) {
     }
 }
 
+// Busca e filtro dinâmicos
+function setupBuscaFiltroEstoque() {
+    const busca = document.getElementById('buscaEstoque');
+    const filtro = document.getElementById('filtroStatusEstoque');
+    if (busca) busca.addEventListener('input', renderEstoque);
+    if (filtro) filtro.addEventListener('change', renderEstoque);
+}
+
 // Inicialização automática na página de estoque
 document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('estoque-tbody')) renderEstoque();
+    if (document.getElementById('estoque-tbody')) {
+        renderEstoque();
+        setupBuscaFiltroEstoque();
+    }
+});
+
+// ===================== INVESTIMENTOS =====================
+
+const investimentosPadrao = [];
+
+function getInvestimentos() {
+    return JSON.parse(localStorage.getItem('investimentos')) || investimentosPadrao;
+}
+function setInvestimentos(investimentos) {
+    localStorage.setItem('investimentos', JSON.stringify(investimentos));
+}
+
+// Renderização com busca e filtro
+function renderInvestimentos() {
+    const tbody = document.getElementById('investimentos-tbody');
+    if (!tbody) return;
+    const busca = (document.getElementById('buscaInvestimento')?.value || '').toLowerCase();
+    const filtro = document.getElementById('filtroStatusInvestimento')?.value || '';
+    let investimentos = getInvestimentos();
+    if (busca) {
+        investimentos = investimentos.filter(inv =>
+            Object.values(inv).some(val => (val || '').toString().toLowerCase().includes(busca))
+        );
+    }
+    if (filtro) {
+        investimentos = investimentos.filter(inv => (inv.status || '').toLowerCase() === filtro);
+    }
+    tbody.innerHTML = '';
+    investimentos.forEach((inv, i) => {
+        tbody.innerHTML += `
+            <tr>
+                <td data-label="Data">${inv.data || ''}</td>
+                <td data-label="Tipo">${inv.tipo || ''}</td>
+                <td data-label="Descrição">${inv.descricao || ''}</td>
+                <td data-label="Valor">${inv.valor || ''}</td>
+                <td data-label="Status"><span class="status ${inv.status ? inv.status.toLowerCase() : ''}">${statusLabel(inv.status)}</span></td>
+                <td data-label="Ações">
+                    <button onclick="abrirModalInvestimento(${i})" class="btn btn-editar" title="Editar">Editar</button>
+                    <button onclick="excluirInvestimento(${i})" class="btn btn-cancelar" title="Excluir">Excluir</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function statusLabel(status) {
+    if (!status) return '';
+    if (status.toLowerCase() === 'andamento') return 'Em andamento';
+    if (status.toLowerCase() === 'concluido') return 'Concluído';
+    if (status.toLowerCase() === 'pendente') return 'Pendente';
+    return status;
+}
+
+// Modal de adicionar/editar
+window.abrirModalInvestimento = function(idx) {
+    document.getElementById('modal-investimento-titulo').textContent = idx !== undefined ? 'Editar Investimento' : 'Novo Investimento';
+    document.getElementById('investimento-idx').value = idx !== undefined ? idx : '';
+    if (idx !== undefined) {
+        const inv = getInvestimentos()[idx];
+        document.getElementById('investimento-data').value = inv.data || '';
+        document.getElementById('investimento-tipo').value = inv.tipo || '';
+        document.getElementById('investimento-descricao').value = inv.descricao || '';
+        document.getElementById('investimento-valor').value = inv.valor || '';
+        document.getElementById('investimento-status').value = inv.status || '';
+    } else {
+        document.getElementById('investimento-idx').value = '';
+        document.getElementById('investimento-data').value = '';
+        document.getElementById('investimento-tipo').value = '';
+        document.getElementById('investimento-descricao').value = '';
+        document.getElementById('investimento-valor').value = '';
+        document.getElementById('investimento-status').value = '';
+    }
+    document.getElementById('modal-investimento').style.display = 'flex';
+}
+window.fecharModalInvestimento = function() {
+    document.getElementById('modal-investimento').style.display = 'none';
+}
+window.salvarInvestimentoModal = function() {
+    const idx = document.getElementById('investimento-idx').value;
+    const novo = {
+        data: document.getElementById('investimento-data').value,
+        tipo: document.getElementById('investimento-tipo').value,
+        descricao: document.getElementById('investimento-descricao').value,
+        valor: document.getElementById('investimento-valor').value,
+        status: document.getElementById('investimento-status').value
+    };
+    if (!novo.data || !novo.tipo || !novo.valor) {
+        alert('Data, Tipo e Valor são obrigatórios!');
+        return;
+    }
+    const investimentos = getInvestimentos();
+    if (idx === '') {
+        investimentos.push(novo);
+    } else {
+        investimentos[idx] = novo;
+    }
+    setInvestimentos(investimentos);
+    fecharModalInvestimento();
+    renderInvestimentos();
+}
+
+// Excluir investimento
+window.excluirInvestimento = function(idx) {
+    if (confirm('Deseja excluir este investimento?')) {
+        const investimentos = getInvestimentos();
+        investimentos.splice(idx, 1);
+        setInvestimentos(investimentos);
+        renderInvestimentos();
+    }
+}
+
+// Busca e filtro dinâmicos
+function setupBuscaFiltroInvestimento() {
+    const busca = document.getElementById('buscaInvestimento');
+    const filtro = document.getElementById('filtroStatusInvestimento');
+    if (busca) busca.addEventListener('input', renderInvestimentos);
+    if (filtro) filtro.addEventListener('change', renderInvestimentos);
+}
+
+// Inicialização automática na página de investimentos
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('investimentos-tbody')) {
+        renderInvestimentos();
+        setupBuscaFiltroInvestimento();
+    }
 });
 
 // Dashboard cards (index.html)
@@ -442,3 +631,14 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('card-estoque').textContent = getProdutos().reduce((soma, p) => soma + (parseInt(p.estoque) || 0), 0);
     }
 });
+
+function atualizarTotalEstoque() {
+    const estoque = getEstoque();
+    let total = 0;
+    estoque.forEach(e => {
+        const qtd = parseFloat(e.estoqueAtual) || 0;
+        total += qtd;
+    });
+    const el = document.getElementById('estoque-total-produtos');
+    if (el) el.textContent = total;
+}

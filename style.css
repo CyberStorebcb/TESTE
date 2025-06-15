@@ -127,6 +127,91 @@ h2 {
     transform: translateY(-4px) scale(1.03);
 }
 
+/* Destaque para o card de total em estoque */
+.estoque-resumo {
+    margin-bottom: 32px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: flex-start;
+}
+.estoque-resumo .dashboard-card {
+    background: linear-gradient(120deg, #e0eafc 0%, #b2f7ef 100%);
+    border: 2px solid #16a08533;
+    box-shadow: 0 4px 24px #16a08522;
+    min-width: 180px;
+    max-width: 260px;
+    padding: 24px 10px;
+    border-radius: 16px;
+    text-align: center;
+    transition: box-shadow 0.2s, transform 0.18s;
+}
+.estoque-resumo .dashboard-card h3 {
+    color: #16a085;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.estoque-resumo .dashboard-card p {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #232946;
+    margin: 0;
+}
+.estoque-resumo .dashboard-card:hover {
+    box-shadow: 0 12px 40px #16a08533;
+    transform: translateY(-2px) scale(1.03);
+}
+.estoque-total-card {
+    background: linear-gradient(135deg, #16a085 0%, #48c6ef 100%);
+    border: none;
+    box-shadow: 0 8px 32px rgba(44,62,80,0.13);
+    min-width: 220px;
+    max-width: 340px;
+    padding: 36px 18px 28px 18px;
+    border-radius: 20px;
+    text-align: center;
+    transition: box-shadow 0.2s, transform 0.18s;
+    position: relative;
+    overflow: hidden;
+}
+.estoque-total-card::before {
+    content: "";
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 90px; height: 90px;
+    background: rgba(255,255,255,0.13);
+    border-radius: 50%;
+    z-index: 0;
+}
+.estoque-total-card h3 {
+    color: #fff;
+    font-size: 1.18rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    z-index: 1;
+    position: relative;
+    text-shadow: 0 2px 8px #16a08544;
+}
+.estoque-total-card p,
+#estoque-total-produtos {
+    font-size: 2.7rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+    z-index: 1;
+    position: relative;
+    text-shadow: 0 2px 8px #16a08544;
+    letter-spacing: 1px;
+}
+.estoque-total-card:hover {
+    box-shadow: 0 16px 48px #16a08533;
+    transform: translateY(-4px) scale(1.04);
+    background: linear-gradient(135deg, #48c6ef 0%, #16a085 100%);
+}
+
 /* Botões */
 .btn, .btn-destaque {
     background: linear-gradient(90deg, #16a085 60%, #138d75 100%);
@@ -298,6 +383,29 @@ footer {
     letter-spacing: 0.5px;
 }
 
+/* Estoque */
+.estoque-section {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+    padding: 32px 18px 28px 18px;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+.estoque-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 18px;
+}
+#buscaEstoque, #filtroStatusEstoque {
+    min-width: 180px;
+}
+@media (max-width: 700px) {
+    .estoque-actions { flex-direction: column; align-items: stretch; }
+}
+
 /* Responsividade */
 @media (max-width: 1100px) {
     main, .produtos-section, .card-section {
@@ -357,5 +465,14 @@ footer {
     .form-modal-content {
         padding: 14px 4px 10px 4px;
         min-width: 0;
+    }
+    .estoque-resumo {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .estoque-total-card {
+        min-width: 0;
+        width: 100%;
+        padding: 24px 8px 18px 8px;
     }
 }
