@@ -149,7 +149,7 @@ window.abrirAdicionarPedido = function() {
     document.getElementById('add-pedido-cliente').value = '';
     document.getElementById('add-pedido-itens').value = '';
     document.getElementById('add-pedido-valor').value = '';
-    document.getElementById('add-pedido-status').value = 'andamento';
+    document.getElementById('add-pedido-status').value = 'concluido';
     document.getElementById('add-pedido-via').value = '';
     document.getElementById('add-pedido-pagamento').value = '';
     document.getElementById('form-adicionar-pedido').style.display = 'flex';
@@ -189,7 +189,7 @@ window.editarPedido = function(idx) {
     document.getElementById('edit-pedido-cliente').value = p.cliente || '';
     document.getElementById('edit-pedido-itens').value = p.itens || '';
     document.getElementById('edit-pedido-valor').value = p.valor || '';
-    document.getElementById('edit-pedido-status').value = p.status || 'andamento';
+    document.getElementById('edit-pedido-status').value = p.status || 'concluido';
     document.getElementById('edit-pedido-via').value = p.endereco || '';
     document.getElementById('edit-pedido-pagamento').value = p.pagamento || '';
     document.getElementById('form-editar-pedido').style.display = 'flex';
@@ -394,12 +394,15 @@ function renderEstoque() {
         tbody.innerHTML += `
             <tr>
                 <td data-label="SKU">${e.sku || ''}</td>
-                <td data-label="Nome">${e.nome || ''}</td>
+                <td data-label="Nome do Produto">${e.nome || ''}</td>
                 <td data-label="Entrada">${e.entrada || ''}</td>
                 <td data-label="Saída">${e.saida || ''}</td>
                 <td data-label="Estoque Atual">${e.estoqueAtual || ''}</td>
-                <td data-label="Data">${e.data || ''}</td>
-                <td data-label="Observações">${e.observacoes || ''}</td>
+                <td data-label="Data Catalogada">${e.dataCatalogada || ''}</td>
+                <td data-label="Preço de Custo">${e.precoCusto || ''}</td>
+                <td data-label="Preço Original">${e.precoOriginal || ''}</td>
+                <td data-label="Preço Promocional">${e.precoPromocional || ''}</td>
+                <td data-label="Descrição">${e.descricao || ''}</td>
                 <td data-label="Status">
                     <span class="status ${e.status ? e.status.toLowerCase() : ''}">${statusLabel(e.status)}</span>
                     <button onclick="mudarStatusEstoque(${i})" class="btn btn-status" title="Mudar Status" style="padding:2px 10px;font-size:0.9em;margin-left:5px;">Mudar</button>
@@ -416,7 +419,6 @@ function renderEstoque() {
 
 function statusLabel(status) {
     if (!status) return '';
-    if (status.toLowerCase() === 'andamento') return 'Em andamento';
     if (status.toLowerCase() === 'concluido') return 'Concluído';
     if (status.toLowerCase() === 'pendente') return 'Pendente';
     return status;
@@ -438,7 +440,7 @@ window.abrirModalEstoque = function(idx) {
         document.getElementById('estoque-preco-original').value = e.precoOriginal || '';
         document.getElementById('estoque-preco-promocional').value = e.precoPromocional || '';
         document.getElementById('estoque-descricao').value = e.descricao || '';
-        document.getElementById('estoque-status').value = (e.status || '').toLowerCase();
+        document.getElementById('estoque-status').value = (e.status || 'concluido').toLowerCase();
     } else {
         document.getElementById('estoque-idx').value = '';
         document.getElementById('estoque-sku').value = '';
@@ -451,7 +453,7 @@ window.abrirModalEstoque = function(idx) {
         document.getElementById('estoque-preco-original').value = '';
         document.getElementById('estoque-preco-promocional').value = '';
         document.getElementById('estoque-descricao').value = '';
-        document.getElementById('estoque-status').value = 'andamento';
+        document.getElementById('estoque-status').value = 'concluido'; // padrão agora é "concluido"
     }
     document.getElementById('modal-estoque').style.display = 'flex';
 }
@@ -494,12 +496,10 @@ window.mudarStatusEstoque = function(idx) {
     const estoque = getEstoque();
     const statusAtual = estoque[idx].status ? estoque[idx].status.toLowerCase() : '';
     let novoStatus = '';
-    if (statusAtual === 'andamento') novoStatus = 'concluido';
-    else if (statusAtual === 'concluido') novoStatus = 'pendente';
-    else if (statusAtual === 'pendente') novoStatus = 'andamento';
-    else novoStatus = 'andamento';
+    if (statusAtual === 'concluido') novoStatus = 'pendente';
+    else novoStatus = 'concluido';
     estoque[idx].status = novoStatus;
-    setEstoque(estoque);
+    setEstoque(estoque);    
     renderEstoque();
 }
 
@@ -575,7 +575,6 @@ function renderInvestimentos() {
 
 function statusLabel(status) {
     if (!status) return '';
-    if (status.toLowerCase() === 'andamento') return 'Em andamento';
     if (status.toLowerCase() === 'concluido') return 'Concluído';
     if (status.toLowerCase() === 'pendente') return 'Pendente';
     return status;
