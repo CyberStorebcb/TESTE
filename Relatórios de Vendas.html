@@ -4,26 +4,122 @@
     <meta charset="UTF-8">
     <title>Relatórios de Vendas | Painel do Lojista</title>
     <link rel="stylesheet" href="style.css">
+      <style>
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            height: 100vh;
+        }
+        main.container {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 0;
+            height: 100%;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        .row.g-4.justify-content-center {
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .dashboard-card {
+            margin-bottom: 0.5rem;
+        }
+        /* Navbar custom */
+        .navbar-custom {
+            background: linear-gradient(90deg, #232946 60%, #16a085 100%);
+            box-shadow: 0 2px 12px rgba(44,62,80,0.10);
+            padding: 0;
+        }
+        .navbar-custom .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 1.5px;
+            color: #16e0b3 !important;
+            text-shadow: 0 2px 8px #16a08544;
+        }
+        .navbar-custom .nav-link {
+            color: #fff !important;
+            font-weight: 600;
+            font-size: 1.08rem;
+            letter-spacing: 0.5px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            margin: 0 2px;
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+        }
+        .navbar-custom .nav-link.active,
+        .navbar-custom .nav-link:focus,
+        .navbar-custom .nav-link:hover {
+            background: linear-gradient(90deg, #16a085 60%, #138d75 100%);
+            color: #fff !important;
+            box-shadow: 0 4px 16px #16a08533;
+        }
+        .navbar-custom .navbar-toggler {
+            border: none;
+        }
+        .navbar-custom .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(22,160,133,0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+        @media (max-width: 991px) {
+            .dashboard-card {
+                padding: 1.5rem 0.7rem;
+            }
+            .navbar-custom .nav-link {
+                margin: 2px 0;
+                text-align: center;
+            }
+        }
+    </style>
+    <!-- Bootstrap 5 CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Icons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <header>
-        <h1>Painel do Lojista</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="Vendas.html">Vendas</a></li>
-                <li><a href="Controle de Estoque.html">Estoque</a></li>
-                <li><a href="Cadastro de Produtos.html">Produtos</a></li>
-                <li><a href="Relatórios de Vendas.html" class="active">Relatórios</a></li>
-                <li><a href="INVESTIMENTOS.html">Investimentos</a></li>
-                <li><a href="PLANEJAMENTO.html">Planejamento</a></li>
-                <li><a href="Cupons de Desconto.html">Cupons</a></li>
-                <li><a href="Configurações da Loja.html">Configurações</a></li>
+    <!-- Navbar Bootstrap Custom -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+            <i class="bi bi-shop-window" style="font-size:1.7rem;"></i>
+            Painel do Lojista
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item"><a href="index.html" class="nav-link"><i class="bi bi-house-door"></i> Início</a></li>
+                <li class="nav-item"><a href="Vendas.html" class="nav-link"><i class="bi bi-cart-check"></i> Vendas</a></li>
+                <li class="nav-item"><a href="Controle de Estoque.html" class="nav-link"><i class="bi bi-box-seam"></i> Estoque</a></li>
+                <li class="nav-item"><a href="Cadastro de Produtos.html" class="nav-link"><i class="bi bi-box"></i> Produtos</a></li>
+                <li class="nav-item"><a href="Relatórios de Vendas.html" class="nav-link active"><i class="bi bi-bar-chart"></i> Relatórios</a></li>
+                <li class="nav-item"><a href="INVESTIMENTOS.html" class="nav-link"><i class="bi bi-cash-coin"></i> Investimentos</a></li>
+                <li class="nav-item"><a href="PLANEJAMENTO.html" class="nav-link"><i class="bi bi-calendar-check"></i> Planejamento</a></li>
+                <li class="nav-item"><a href="Cupons de Desconto.html" class="nav-link"><i class="bi bi-ticket-perforated"></i> Cupons</a></li>
+                <li class="nav-item"><a href="Configurações da Loja.html" class="nav-link"><i class="bi bi-gear"></i> Configurações</a></li>
             </ul>
-        </nav>
-    </header>
+        </div>
+    </div>
+</nav>
     <main>
-        <h2>Relatórios de Vendas</h2>
+        <h1 style="text-align: center; font-size: 2.5rem; font-weight: 900; color: #16a085; margin: 2rem 0 1.5rem 0; text-shadow: 0 2px 12px #16a08533;">
+            <i class="bi bi-bar-chart" style="margin-right: 10px;"></i>
+            Relatórios de Vendas
+        </h1>
         <div class="table-responsive">
             <table>
                 <thead>
@@ -86,7 +182,7 @@
             </table>
         </div>
     </main>
-   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
