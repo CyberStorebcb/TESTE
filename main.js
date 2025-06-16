@@ -171,7 +171,6 @@ window.salvarAdicionarPedido = function() {
     const qtds = lista.querySelectorAll('.pedido-item-qtd');
     let itensArr = [];
     let erroEstoque = false;
-    let estoque = getEstoque();
 
     selects.forEach((sel, i) => {
         const label = sel.value;
@@ -192,16 +191,6 @@ window.salvarAdicionarPedido = function() {
         alert('Um ou mais itens estão com estoque insuficiente!');
         return;
     }
-
-    // Atualiza estoque
-    itensArr.forEach(item => {
-        const idx = estoque.findIndex(e => (e.nome + (e.descricao ? ' - ' + e.descricao : '')) === item.label);
-        if (idx >= 0) {
-            estoque[idx].estoqueAtual = (parseInt(estoque[idx].estoqueAtual) - item.qtd).toString();
-        }
-    });
-    setEstoque(estoque);
-    renderEstoque && renderEstoque();
 
     // Salva pedido
     const pedidos = getPedidos();

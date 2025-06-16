@@ -58,21 +58,21 @@
         </nav>
     </header>
     <main>
-        <div class="estoque-resumo">
-            <div class="dashboard-card estoque-total-card">
-                <h3>Total em Estoque</h3>
-                <p id="estoque-total-produtos">0</p>
-            </div>
-        </div>
         <section class="estoque-section">
-            <div class="estoque-actions" style="margin-bottom:24px;">
-                <button onclick="abrirModalEstoque()" class="btn btn-destaque">+ Novo Item de Estoque</button>
+            <h2>Controle de Estoque</h2>
+            <div class="estoque-resumo">
+                <div class="dashboard-card estoque-total-card">
+                    <h3>Total em Estoque</h3>
+                    <p id="estoque-total-produtos">0</p>
+                </div>
+            </div>
+            <div class="estoque-actions">
+                <button class="btn btn-destaque" onclick="abrirModalEstoque()">+ Novo Item de Estoque</button>
                 <input type="text" id="buscaEstoque" placeholder="Buscar no estoque..." class="input-busca">
-                <select id="filtroStatusEstoque" class="input-busca" style="max-width:180px;">
+                <select id="filtroStatusEstoque" class="input-busca">
                     <option value="">Todos os Status</option>
-                    <option value="andamento">Em andamento</option>
-                    <option value="concluido">Concluído</option>
-                    <option value="pendente">Pendente</option>
+                    <option value="concluido">Em estoque</option>
+                    <option value="pendente">Vendido</option>
                 </select>
             </div>
             <div class="table-responsive">
@@ -128,6 +128,6 @@
             </div>
         </div>
     </main>
-    <script src="main.js"></script>
+    <script src="Controle de Estoque.js"></script>
 </body>
 </html>

@@ -2,130 +2,93 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Vendas | Painel do Lojista</title>
+    <title>Cadastro de Produtos | Painel do Lojista</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <header>
-        <h1>Painel do Lojista</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="Vendas.html" class="active">Vendas</a></li>
-                <li><a href="Controle de Estoque.html">Estoque</a></li>
-                <li><a href="Cadastro de Produtos.html">Produtos</a></li>
-                <li><a href="Relatórios de Vendas.html">Relatórios</a></li>
-                <li><a href="INVESTIMENTOS.html">Investimentos</a></li>
-                <li><a href="PLANEJAMENTO.html">Planejamento</a></li>
-                <li><a href="Cupons de Desconto.html">Cupons</a></li>
-                <li><a href="Configurações da Loja.html">Configurações</a></li>
-            </ul>
-        </nav>
-    </header>   
+    <!-- Navbar Bootstrap Custom -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="bi bi-shop-window" style="font-size:1.7rem;"></i>
+                Painel do Lojista
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="bi bi-house-door"></i> Início</a></li>
+                    <li class="nav-item"><a href="Vendas.html" class="nav-link"><i class="bi bi-cart-check"></i> Vendas</a></li>
+                    <li class="nav-item"><a href="Controle de Estoque.html" class="nav-link"><i class="bi bi-box-seam"></i> Estoque</a></li>
+                    <li class="nav-item"><a href="Cadastro de Produtos.html" class="nav-link active"><i class="bi bi-box"></i> Produtos</a></li>
+                    <li class="nav-item"><a href="Relatórios de Vendas.html" class="nav-link"><i class="bi bi-bar-chart"></i> Relatórios</a></li>
+                    <li class="nav-item"><a href="INVESTIMENTOS.html" class="nav-link"><i class="bi bi-cash-coin"></i> Investimentos</a></li>
+                    <li class="nav-item"><a href="PLANEJAMENTO.html" class="nav-link"><i class="bi bi-calendar-check"></i> Planejamento</a></li>
+                    <li class="nav-item"><a href="Cupons de Desconto.html" class="nav-link"><i class="bi bi-ticket-perforated"></i> Cupons</a></li>
+                    <li class="nav-item"><a href="Configurações da Loja.html" class="nav-link"><i class="bi bi-gear"></i> Configurações</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <main>
-        <h2>Vendas</h2>
+        <h2>Cadastro de Produtos</h2>
         <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:18px;">
-            <button onclick="abrirAdicionarPedido()" class="btn btn-destaque">+ Novo Pedido</button>
-            <input type="text" id="buscaPedido" placeholder="Buscar pedido..." class="input-busca">
+            <button onclick="abrirAdicionarProduto()" class="btn btn-destaque">+ Novo Produto</button>
+            <input type="text" id="buscaProduto" placeholder="Buscar produto..." class="input-busca">
         </div>
         <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
-                        <th>ID do Pedido</th>
-                        <th>Data</th>
-                        <th>Cliente</th>
-                        <th>Itens</th>
-                        <th>Valor Total</th>
-                        <th>Status</th>
-                        <th>VIA</th>
-                        <th>Forma de Pagamento</th>
+                        <th>ID do Produto</th>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Preço</th>
+                        <th>Quantidade em Estoque</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody id="pedidos-tbody">
+                <tbody id="produtos-tbody">
                     <!-- Linhas geradas pelo JS -->
                 </tbody>
             </table>
         </div>
-        <!-- Modal de editar pedido -->
-        <div id="form-editar-pedido" class="form-modal" style="display:none;">
+        <!-- Modal de editar produto -->
+        <div id="form-editar-produto" class="form-modal" style="display:none;">
             <div class="form-modal-content">
-                <span class="form-close" onclick="cancelarEdicaoPedido()">&times;</span>
-                <h3>Editar Pedido</h3>
-                <input type="hidden" id="edit-pedido-id">
-                <input type="text" id="edit-pedido-data" placeholder="Data" class="input-busca"><br>
-                <input type="text" id="edit-pedido-cliente" placeholder="Cliente" class="input-busca"><br>
-                <input type="text" id="edit-pedido-itens" placeholder="Itens" class="input-busca"><br>
-                <input type="text" id="edit-pedido-valor" placeholder="Valor Total" class="input-busca"><br>
-                   <select id="edit-pedido-via" class="input-busca">
-                    <option value="" disabled>Selecione a VIA</option>
-                    <option value="Retirada">Retirada</option>
-                    <option value="Entrega">Entrega</option>
-                </select><br>
-                
-               
-                </select><br>
-                
-
-                <select id="edit-pedido-status" class="input-busca">
-                    <option value="andamento">Em andamento</option>
-                    <option value="concluido">Concluído</option>
-                    <option value="pendente">Pendente</option>
-                </select><br>
-                <select id="edit-pedido-via" class="input-busca">
-                    <option value="" disabled>Selecione a VIA</option>
-                    <option value="Retirada">Retirada</option>
-                    <option value="Entrega">Entrega</option>
-                </select><br>
-                <input type="text" id="edit-pedido-pagamento" placeholder="Forma de Pagamento" class="input-busca"><br>
-                <button onclick="salvarEdicaoPedido()" class="btn">Salvar</button>
-                <button onclick="cancelarEdicaoPedido()" class="btn btn-cancelar">Cancelar</button>
+                <span class="form-close" onclick="cancelarEdicaoProduto()">&times;</span>
+                <h3>Editar Produto</h3>
+                <input type="hidden" id="edit-produto-id">
+                <input type="text" id="edit-produto-nome" placeholder="Nome do Produto" class="input-busca"><br>
+                <input type="text" id="edit-produto-categoria" placeholder="Categoria" class="input-busca"><br>
+                <input type="text" id="edit-produto-preco" placeholder="Preço" class="input-busca"><br>
+                <input type="text" id="edit-produto-quantidade" placeholder="Quantidade em Estoque" class="input-busca"><br>
+                <button onclick="salvarEdicaoProduto()" class="btn">Salvar</button>
+                <button onclick="cancelarEdicaoProduto()" class="btn btn-cancelar">Cancelar</button>
             </div>
         </div>
-        <!-- Modal de adicionar pedido -->
-        <div id="form-adicionar-pedido" class="form-modal" style="display:none;">
+        <!-- Modal de adicionar produto -->
+        <div id="form-adicionar-produto" class="form-modal" style="display:none;">
             <div class="form-modal-content">
-                <span class="form-close" onclick="fecharAdicionarPedido()">&times;</span>
-                <h3>Novo Pedido</h3>
-                <input type="date" id="add-pedido-data" placeholder="Data" class="input-busca"><br>
-                <input type="text" id="add-pedido-cliente" placeholder="Cliente" class="input-busca"><br>
-                <input type="text" id="add-pedido-itens" placeholder="Pesquisar e selecionar item do estoque..." class="input-busca" list="estoque-itens-list"><br>
-                <datalist id="estoque-itens-list">
-                    <!-- Opções geradas pelo JS -->
-                </datalist>
-                <div id="pedido-itens-area">
-                    <label>Itens do Pedido:</label>
-                    <div id="pedido-itens-lista"></div>
-                    <button type="button" class="btn" onclick="adicionarLinhaItemPedido()">+ Adicionar Item</button>
-                </div>
-                <div style="margin:10px 0;">
-                    <strong>Resumo:</strong>
-                    <div id="pedido-resumo"></div>
-                </div>
-                <input type="text" id="add-pedido-valor" placeholder="Valor Total" class="input-busca" readonly><br>
-                <select id="add-pedido-status" class="input-busca">
-                    <option value="concluido">Concluído</option>
-                    <option value="pendente">Pendente</option>
-                </select><br>
-                <select id="add-pedido-via" class="input-busca">
-                    <option value="" disabled selected>Selecione a VIA</option>
-                    <option value="Retirada">Retirada</option>
-                    <option value="Entrega">Entrega</option>
-                </select><br>
-                <select id="add-pedido-pagamento" class="input-busca">
-                    <option value="" disabled selected>Forma de Pagamento</option>
-                    <option value="dinheiro">Dinheiro</option>
-                    <option value="cartao_credito">Cartão de Crédito</option>
-                    <option value="cartao_debito">Cartão de Débito</option>
-                    <option value="pix">PIX</option>
-                </select><br>
-                <button onclick="salvarAdicionarPedido()" class="btn">Salvar</button>
-                <button onclick="fecharAdicionarPedido()" class="btn btn-cancelar">Cancelar</button>
+                <span class="form-close" onclick="fecharAdicionarProduto()">&times;</span>
+                <h3>Novo Produto</h3>
+                <input type="text" id="add-produto-nome" placeholder="Nome do Produto" class="input-busca"><br>
+                <input type="text" id="add-produto-categoria" placeholder="Categoria" class="input-busca"><br>
+                <input type="text" id="add-produto-preco" placeholder="Preço" class="input-busca"><br>
+                <input type="text" id="add-produto-quantidade" placeholder="Quantidade em Estoque" class="input-busca"><br>
+                <button onclick="salvarAdicionarProduto()" class="btn">Salvar</button>
+                <button onclick="fecharAdicionarProduto()" class="btn btn-cancelar">Cancelar</button>
             </div>
         </div>
     </main>
 
     <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
